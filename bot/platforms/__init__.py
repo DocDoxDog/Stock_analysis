@@ -13,6 +13,10 @@
 
 from bot.platforms.base import BotPlatform
 from bot.platforms.dingtalk import DingtalkPlatform
+from .telegram import TelegramPlatform
+# ...
+ALL_PLATFORMS['telegram'] = TelegramPlatform()
+
 
 # 所有可用平台（Webhook 模式）
 ALL_PLATFORMS = {

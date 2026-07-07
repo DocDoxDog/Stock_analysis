@@ -2527,7 +2527,7 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
     },
     "REPORT_LANGUAGE": {
         "title": "Report Language",
-        "description": "Default output language for reports and notification templates. Supported values: zh, en.",
+        "description": "Default output language for reports and notification templates. Supported values: zh, en, ko, th.",
         "category": "notification",
         "data_type": "string",
         "ui_control": "select",
@@ -2539,8 +2539,9 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
             {"label": "Chinese", "value": "zh"},
             {"label": "English", "value": "en"},
             {"label": "Korean", "value": "ko"},
+            {"label": "Thai", "value": "th"},
         ],
-        "validation": {"enum": ["zh", "en", "ko"]},
+        "validation": {"enum": ["zh", "en", "ko", "th"]},
         "display_order": 56,
         "help_key": "settings.notification.report_output",
         "examples": [

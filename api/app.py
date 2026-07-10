@@ -366,7 +366,23 @@ def create_app(static_dir: Optional[Path] = None) -> FastAPI:
     
     app.include_router(api_v1_router, prefix="/api/v1")
     add_error_handlers(app)
-    
+
+    # ============================================================
+    # Telegram Webhook（交互式问答，需配置 TELEGRAM_BOT_TOKEN）
+    # ============================================================
+
+    @app.post("/webhook/telegram", include_in_schema=False)
+    async def telegram_webhook(request: Request):
+        from bot.handler import handle_webhook_async
+
+        body = await request.body()
+        response = await handle_webhook_async(
+            'telegram',
+            dict(request.headers),
+            body,
+        )
+        return JSONResponse(status_code=response.status_code, content=response.body)
+
     # ============================================================
     # 根路由和健康检查
     # ============================================================
@@ -543,14 +559,6 @@ def create_app(static_dir: Optional[Path] = None) -> FastAPI:
             return _frontend_index_response(static_dir)
     
     return app
-    from fastapi import APIRouter, Request
-from bot.handler import handle_telegram_webhook # (สมมติว่าคุณมีฟังก์ชันนี้เตรียมไว้แล้ว)
-
-@app.post("/webhook/telegram")
-async def telegram_webhook(request: Request):
-    # ส่งต่อให้ bot/handler.py จัดการ
-    return await handle_telegram_webhook(request)
-    
 
 
 # 默认应用实例（供 uvicorn 直接使用）
